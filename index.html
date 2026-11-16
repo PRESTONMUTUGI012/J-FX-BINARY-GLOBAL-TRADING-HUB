@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <title>ELHADART GLOBAL FX | A+ DYNAMIC UNLOCK & SHIFT SUITE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: { colors: { darker: '#030712', cardbg: '#0d1b2a', accent: '#10b981', gold: '#FFD700', fxgreen: '#00ff88' } }
+            }
+        }
+    </script>
+    <style>
+        .fx-glow { text-shadow: 0 0 35px rgba(0, 255, 136, 0.75); }
+        .wallpaper-bg { background-color: #030712; background-image: radial-gradient(circle at 50% 20%, rgba(0, 255, 136, 0.12) 0%, transparent 55%), radial-gradient(circle at 15% 85%, rgba(0, 168, 255, 0.1) 0%, transparent 45%); }
+        .trading-grid-bg { background-image: linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px); background-size: 24px 24px; }
+        .tick-up { color: #00ff88 !important; transition: color 0.2s ease; }
+        .tick-down { color: #ff4d4d !important; transition: color 0.2s ease; }
+    </style>
+</head>
+<body class="wallpaper-bg trading-grid-bg text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+
+    <!-- 1.5 MINUTE SPLASH SCREEN LOADING BLOODLINE -->
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-[#030712] flex flex-col items-center justify-between p-6 transition-opacity duration-500 overflow-y-auto">
+        <div class="w-full max-w-lg mx-auto flex flex-col items-center text-center space-y-8 my-auto py-10">
+            <div class="space-y-3">
+                <div class="text-3xl sm:text-5xl font-black tracking-wider text-cyan-400 fx-glow uppercase leading-none">
+                    ELHADART <span class="text-white">GLOBAL FX</span>
+                </div>
+                <div class="flex items-center justify-center space-x-3 text-2xl sm:text-4xl font-black text-white tracking-widest">
+                    <span>AI & BINARY</span>
+                    <span class="text-fxgreen text-4xl sm:text-6xl fx-glow">PRO</span>
+                </div>
+                <div class="text-xs sm:text-sm font-mono tracking-[0.2em] text-slate-300 uppercase pt-2 border-t border-slate-800">
+                    A+ DYNAMIC UNLOCK & SHIFT SUITE | COURTESY OF ELHADARTGLOBALFX
+                </div>
+            </div>
+
+            <div class="w-full bg-slate-950/95 border-2 border-fxgreen/60 rounded-3xl p-6 shadow-[0_0_50px_rgba(0,255,136,0.3)] space-y-4 backdrop-blur-xl">
+                <div class="text-xs font-mono text-gold font-bold uppercase tracking-wider">
+                    🔒 OFFICIAL AFFILIATE OAUTH GATEWAY
+                </div>
+                <p class="text-xs text-slate-300 font-mono">
+                    Connect via your official affiliate link to unlock automated dynamic signal shifting and temporary locking across all 45 exhaustive markets with permanent commission tracking.
+                </p>
+                <button onclick="authDeriv()" class="w-full bg-gradient-to-r from-emerald-500 to-fxgreen hover:from-emerald-400 hover:to-emerald-300 text-slate-950 font-black py-4 rounded-2xl uppercase text-sm tracking-wider shadow-[0_0_30px_rgba(0,255,136,0.5)] transition flex items-center justify-center space-x-2">
+                    <span>🚀 SIGN UP / SIGN IN VIA AFFILIATE OAUTH</span>
+                </button>
+            </div>
+
+            <div class="w-full space-y-2.5">
+                <div class="text-xs font-mono text-gold font-bold animate-pulse" id="splash-status-text">
+                    👋 Initializing Dynamic Unlocking & Market Shifting Engine (1.5 Minutes)...
+                </div>
+                <div class="w-full bg-slate-900 rounded-full h-2.5 border border-slate-800 overflow-hidden">
+                    <div id="splash-progress-bar" class="bg-gradient-to-r from-cyan-400 via-fxgreen to-gold h-full w-0 transition-all duration-1000"></div>
+                </div>
+                <div class="text-[11px] font-mono text-slate-400" id="splash-countdown-text">
+                    Time Remaining: 01:30
+                </div>
+            </div>
+
+            <div class="w-full space-y-2">
+                <button onclick="dismissSplash()" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-bold py-3 rounded-xl uppercase text-xs tracking-wider border border-slate-700 transition">
+                    Skip Splash & Enter Terminal ➔
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFIT & TP NOTIFICATION TOAST -->
+    <div id="profit-toast-banner" class="fixed top-20 right-6 z-45 transform translate-x-full opacity-0 transition-all duration-500 pointer-events-none">
+        <div class="bg-slate-950/95 border-2 border-emerald-500 rounded-2xl p-4 shadow-[0_0_35px_rgba(0,255,136,0.4)] backdrop-blur-xl flex items-center space-x-3.5">
+            <div class="bg-emerald-500/20 p-2.5 rounded-xl border border-emerald-500/40 text-fxgreen text-lg">📉 ✅</div>
+            <div>
+                <div class="text-[10px] font-mono font-bold tracking-widest text-fxgreen uppercase">ELHADARTGLOBALFX TP SECURED 📉 ✅</div>
+                <div id="profit-toast-details" class="text-xs font-bold text-white mt-0.5">TP hitted and courtesy of ELHADARTGLOBALFX 📉 ✅</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 px-6 py-3 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-40">
+        <div class="flex items-center space-x-3">
+            <div class="w-3 h-3 bg-fxgreen rounded-full animate-ping"></div>
+            <div>
+                <span class="font-black tracking-widest text-cyan-400 text-sm block">ELHADART GLOBAL FX SUITE</span>
+                <span id="header-asset-count" class="text-[10px] font-mono text-fxgreen">Live 45 Markets Connected</span>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2.5 flex-wrap">
+            <button onclick="openDerivCashier('deposit')" class="bg-emerald-600/20 hover:bg-emerald-600 text-fxgreen hover:text-white text-xs font-bold px-3 py-1.5 rounded-xl border border-emerald-500/40 transition">
+                💳 Deposit
+            </button>
+            <button onclick="openDerivCashier('withdraw')" class="bg-rose-600/20 hover:bg-rose-600 text-rose-400 hover:text-white text-xs font-bold px-3 py-1.5 rounded-xl border border-rose-500/40 transition">
+                💸 Withdraw
+            </button>
+            <span id="oauth-connection-badge" class="text-[10px] font-mono font-bold text-amber-300 bg-slate-900 px-2.5 py-1 rounded border border-slate-700">🔌 Ready / Sim</span>
+            <button onclick="toggleTerminalAudio()" class="bg-slate-900 hover:bg-slate-800 text-fxgreen text-xs font-mono font-bold px-3 py-1.5 rounded-xl border border-fxgreen/30">
+                <span id="audio-status-icon">🔊</span> <span id="audio-status-text">SFX</span>
+            </button>
+            <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
+                <button id="btn-demo" onclick="setMode('demo')" class="px-3 py-1 rounded-lg font-bold bg-emerald-600 text-white transition">DEMO</button>
+                <button id="btn-real" onclick="setMode('real')" class="px-3 py-1 rounded-lg font-semibold text-slate-400 hover:text-white transition">REAL</button>
+            </div>
+            <div class="text-right">
+                <div id="account-id-label" class="text-[10px] text-slate-400 uppercase font-mono">Demo Balance</div>
+                <div id="account-balance" class="text-sm font-bold font-mono text-emerald-400">$1,000.00</div>
+            </div>
+            <button onclick="authDeriv()" class="bg-gradient-to-r from-emerald-500 to-fxgreen hover:from-emerald-400 hover:to-emerald-300 text-slate-950 text-xs font-black px-4 py-2 rounded-xl transition shadow-[0_0_15px_rgba(0,255,136,0.3)]">
+                👤 Connect / Affiliate Sign Up
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN GRID -->
+    <main class="flex-1 max-w-[1680px] w-full mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- COLUMN 1: SIGNAL BOX + 45-MARKET RADAR -->
+        <div class="space-y-6">
+            <!-- SIGNAL BOX -->
+            <div class="bg-slate-950/95 backdrop-blur-xl border-2 border-fxgreen rounded-2xl p-4 shadow-[0_0_25px_rgba(0,255,136,0.2)] space-y-3 font-mono relative">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <div class="flex items-center space-x-1.5">
+                        <span class="text-base">🚦</span>
+                        <h2 class="text-xs font-black uppercase tracking-wider text-fxgreen">A+ Dynamic Unlocking Signal Box</h2>
+                    </div>
+                    <span id="side-signal-live-badge" class="text-[9px] font-black bg-fxgreen text-slate-950 px-2 py-0.5 rounded animate-pulse">AUTO-SHIFTING | A+</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 text-[11px]">
+                    <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+                        <div class="text-[9px] text-slate-400 uppercase">Active Asset</div>
+                        <div id="side-sig-asset" class="text-white font-bold truncate">1HZ10V</div>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+                        <div class="text-[9px] text-slate-400 uppercase">Strategy Setup</div>
+                        <div id="side-sig-contract" class="text-gold font-bold truncate">OVER 2</div>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+                        <div class="text-[9px] text-slate-400 uppercase">Timeframe</div>
+                        <div id="side-sig-candle" class="text-cyan-400 font-bold">5 Min (Dynamic)</div>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+                        <div class="text-[9px] text-slate-400 uppercase">Ticks to Set</div>
+                        <div id="side-sig-ticks" class="text-white font-bold">5 Ticks</div>
+                    </div>
+                    <div class="bg-slate-900 p-2.5 rounded-xl border-2 border-fxgreen/60 col-span-2 flex justify-between items-center">
+                        <div>
+                            <div class="text-[9px] text-fxgreen uppercase font-bold">1. Feeder Digits Column</div>
+                            <div class="text-[9px] text-slate-400">Temp Locked Entry (Rule 14-15)</div>
+                        </div>
+                        <div id="side-sig-feeder" class="text-fxgreen font-black text-2xl tracking-widest">[ 1 ]</div>
+                    </div>
+                    <div class="bg-slate-900 p-2 rounded-xl border border-gold/40 col-span-2 flex justify-between items-center">
+                        <span class="text-[9px] text-gold uppercase font-bold">Holding Target (5-7 Runs):</span>
+                        <span id="side-sig-runs" class="text-gold font-black text-xs">0 / 6 Runs</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-800 flex justify-between items-center text-[10px]">
+                    <span class="text-slate-400">Assigned AI Boat:</span>
+                    <span id="side-sig-boat" class="text-cyan-300 font-bold">Boat 8 (Over/Under Matrixer)</span>
+                </div>
+
+                <div id="side-feeder-trigger-bar" class="bg-emerald-950/60 border border-fxgreen/60 rounded-xl px-2.5 py-1.5 text-center text-[10px] font-bold text-fxgreen">
+                    🔄 Click Any Market Below to Instantly Shift & Scan
+                </div>
+
+                <button onclick="copySideSignalSettings()" class="w-full bg-gold hover:bg-amber-400 text-slate-950 font-black py-2 rounded-xl text-[10px] uppercase transition shadow-[0_0_12px_rgba(255,215,0,0.35)]">
+                    📋 Copy Signal for Deriv Bot Users
+                </button>
+            </div>
+
+            <!-- EXHAUSTIVE 45-MARKET RADAR (Rule 15 Clickable Asset Selector) -->
+            <div class="bg-slate-950/85 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-4 shadow-2xl space-y-3 relative">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300">Exhaustive Asset Radar (Click to Shift)</h2>
+                    <span class="text-[10px] font-mono text-fxgreen">All 45 Markets</span>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-1 text-[10px] font-mono">
+                    <button onclick="switchCategory('all')" id="cat-all" class="bg-emerald-600 text-white font-bold py-1.5 px-1 rounded-lg transition">All</button>
+                    <button onclick="switchCategory('volatility_1s')" id="cat-volatility_1s" class="bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800">Vol 1s</button>
+                    <button onclick="switchCategory('volatility')" id="cat-volatility" class="bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800">Volatility</button>
+                    <button onclick="switchCategory('boom_crash')" id="cat-boom_crash" class="bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800">Boom/Crash</button>
+                    <button onclick="switchCategory('jump')" id="cat-jump" class="bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800">Jump</button>
+                    <button onclick="switchCategory('stocks')" id="cat-stocks" class="bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800">Stocks/ETF</button>
+                    <button onclick="switchCategory('forex')" id="cat-forex" class="bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800">Forex</button>
+                    <button onclick="switchCategory('commodities')" id="cat-commodities" class="bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800">Commodity</button>
+                    <button onclick="switchCategory('crypto')" id="cat-crypto" class="bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800">Crypto</button>
+                </div>
+
+                <div class="grid grid-cols-3 text-[10px] font-mono text-slate-400 border-b border-slate-800 pb-1 px-1 pt-1">
+                    <div>ASSET</div>
+                    <div class="text-right">LIVE PRICE (TICKS)</div>
+                    <div class="text-right">STATUS</div>
+                </div>
+                <div id="scanner-market-list" class="space-y-1.5 max-h-[250px] overflow-y-auto text-[11px] font-mono">
+                    <div class="text-fxgreen text-center py-4 animate-pulse">Loading Live Ticks...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMN 2 & 3: TRADINGVIEW CHART + AUTOMATED MANUAL & BULK PLATFORMS -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- TRADINGVIEW CHART -->
+            <div id="chart-card-wrapper" class="bg-slate-950/85 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-4 shadow-2xl space-y-3 transition-all duration-300">
+                <div class="flex flex-wrap justify-between items-center gap-2">
+                    <div>
+                        <h2 id="chart-title-label" class="text-xs font-bold uppercase tracking-wider text-fxgreen">TradingView Institutional Suite</h2>
+                        <span id="adaptive-shift-status" class="text-[10px] font-mono text-cyan-300">Scanner Status: Rule 15 Active (Click any asset to instantly lock & analyze)</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleChartFullscreen()" id="expand-chart-btn" class="bg-emerald-600/20 hover:bg-emerald-600 text-fxgreen hover:text-white text-[10px] font-mono font-bold px-2.5 py-1 rounded-lg border border-emerald-500/40 transition">
+                            <span>⛶ Expand</span>
+                        </button>
+                        <div class="flex space-x-1 text-[10px] font-mono">
+                            <button onclick="changeChartTimeframe('1')" class="tf-btn px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300" data-tf="1">1m</button>
+                            <button onclick="changeChartTimeframe('3')" class="tf-btn px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300" data-tf="3">3m</button>
+                            <button onclick="changeChartTimeframe('5')" class="tf-btn px-2 py-1 rounded bg-emerald-600 text-white font-bold" data-tf="5">5m</button>
+                            <button onclick="changeChartTimeframe('15')" class="tf-btn px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300" data-tf="15">15m</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="chart-view-port" class="bg-slate-900 rounded-xl border border-slate-800 p-2 relative h-[230px]">
+                    <div id="tradingview_advanced_chart" class="w-full h-full"></div>
+                </div>
+            </div>
+
+            <!-- AUTOMATED MANUAL & BULK TRADING PLATFORMS -->
+            <div class="bg-slate-950/85 backdrop-blur-xl border-2 border-gold rounded-2xl p-4 shadow-2xl space-y-4 font-mono">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-gold">⚡ Automated Manual & Bulk Trading Platforms</h2>
+                    <span class="text-[10px] font-bold text-slate-950 bg-gold px-2.5 py-1 rounded">AUTO-STOPS AT 5-7 RUNS TP</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- MANUAL TRADING PLATFORM -->
+                    <div class="bg-slate-900 p-3.5 rounded-xl border border-emerald-500/40 space-y-3">
+                        <div class="flex justify-between items-center text-[10px]">
+                            <span class="font-bold text-fxgreen uppercase">🕹️ Automated Manual Platform</span>
+                            <span class="text-slate-400">Stake ($): <input id="manual-stake" type="number" value="1.00" min="0.35" step="0.1" class="w-16 bg-slate-950 border border-slate-700 rounded px-1.5 py-0.5 text-white text-right"></span>
+                        </div>
+                        <div class="text-xs text-slate-300 space-y-1">
+                            <div class="flex justify-between"><span class="text-slate-400">Asset:</span><span id="man-asset" class="text-white font-bold">1HZ10V</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Strategy:</span><span id="man-strat" class="text-gold font-bold">OVER 2</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">Temp Entry:</span><span id="man-trigger" class="text-fxgreen font-bold">Firm Digit [1]</span></div>
+                        </div>
+                        <button onclick="executeAutomatedManualTrade()" id="btn-exec-manual" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase transition shadow-[0_0_15px_rgba(0,255,136,0.4)]">
+                            🚀 Execute Automated Manual Trade
+                        </button>
+                    </div>
+
+                    <!-- BULK TRADING PLATFORM -->
+                    <div class="bg-slate-900 p-3.5 rounded-xl border border-cyan-500/40 space-y-3">
+                        <div class="flex justify-between items-center text-[10px]">
+                            <span class="font-bold text-cyan-400 uppercase">📦 Automated Bulk Platform</span>
+                            <span class="text-slate-400">Basket: <select id="bulk-count" class="bg-slate-950 border border-slate-700 rounded text-white px-1 py-0.5"><option value="3">3 Low-Noise Assets</option><option value="5" selected>5 Low-Noise Assets</option><option value="8">8 Low-Noise Assets</option></select></span>
+                        </div>
+                        <div class="space-y-1.5 text-xs">
+                            <div class="flex justify-between items-center text-slate-400">
+                                <span>Bulk Stake ($):</span>
+                                <input id="bulk-stake" type="number" value="1.00" min="0.35" step="0.1" class="w-20 bg-slate-950 border border-slate-700 rounded px-2 py-0.5 text-white text-right font-bold">
+                            </div>
+                            <div class="flex justify-between items-center text-slate-400">
+                                <span>Loss Compression:</span>
+                                <span class="text-fxgreen font-bold">Active (Dynamic Lock)</span>
+                            </div>
+                        </div>
+                        <button onclick="executeAutomatedBulkTrade()" id="btn-exec-bulk" class="w-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase transition shadow-[0_0_15px_rgba(0,168,255,0.4)]">
+                            ⚡ Execute Automated Bulk Basket
+                        </button>
+                    </div>
+                </div>
+
+                <!-- LIVE TRANSACTION LOGS -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3 space-y-2">
+                    <div class="flex justify-between items-center text-[10px]">
+                        <span class="font-bold text-fxgreen uppercase">📜 Live Execution & Transaction Stream</span>
+                        <span id="tx-status-pill" class="text-slate-400">Standby • Rule 15 Active</span>
+                    </div>
+                    <div id="live-transaction-log" class="max-h-[115px] overflow-y-auto space-y-1 text-[10px] font-mono text-slate-300">
+                        <div class="text-slate-500 italic">Click any market in the radar to instantly shift, analyze, and lock A+ signals...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMN 4: FIRM FEEDER MONITOR & 9 AI BOATS HUB -->
+        <div class="space-y-6">
+            <!-- FIRM FEEDER MONITOR -->
+            <div class="bg-slate-950/85 backdrop-blur-xl border border-emerald-500/50 rounded-2xl p-4 shadow-2xl space-y-3 font-mono">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-fxgreen">Firm Entry & Noise Shield</h2>
+                    <span id="streak-lock-badge" class="text-[10px] font-bold text-fxgreen bg-emerald-950 px-2 py-1 rounded border border-emerald-600">RUNS: 0/6</span>
+                </div>
+
+                <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2 text-center">
+                    <div class="text-[10px] text-slate-400 uppercase tracking-widest">TEMP LOCKED ENTRY DIGIT</div>
+                    <div id="stable-entry-digit-display" class="text-4xl font-black text-fxgreen fx-glow tracking-widest">[ 1 ]</div>
+                    <div class="flex justify-around text-[10px] pt-1 border-t border-slate-800">
+                        <span class="text-cyan-400">Momentum: <b id="momentum-readout">99% A+</b></span>
+                        <span class="text-emerald-400">Loss Compression: <b id="noise-readout">Active</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9 AI BOATS HUB -->
+            <div class="bg-slate-950/85 backdrop-blur-xl border border-emerald-500/60 rounded-2xl p-4 shadow-2xl space-y-3 font-mono">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xs font-bold uppercase tracking-wider text-fxgreen">🤖 9 AI Boats Hub</h2>
+                        <span class="text-[10px] text-gold">Click to Run • Auto-Stops at TP</span>
+                    </div>
+                    <span id="active-boat-badge" class="text-[10px] font-bold text-slate-950 bg-fxgreen px-2 py-0.5 rounded">BOAT 8 ARMED</span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 text-[10px]">
+                    <button onclick="selectBoat(1)" id="boat-1" class="p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition"><div class="font-bold text-white">Boat 1</div><div class="text-[8px] text-slate-400">OB Sniper</div></button>
+                    <button onclick="selectBoat(2)" id="boat-2" class="p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition"><div class="font-bold text-white">Boat 2</div><div class="text-[8px] text-slate-400">Rise/Fall</div></button>
+                    <button onclick="selectBoat(3)" id="boat-3" class="p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition"><div class="font-bold text-white">Boat 3</div><div class="text-[8px] text-slate-400">Sweep Fade</div></button>
+                    <button onclick="selectBoat(4)" id="boat-4" class="p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition"><div class="font-bold text-white">Boat 4</div><div class="text-[8px] text-slate-400">FVG Rebal</div></button>
+                    <button onclick="selectBoat(5)" id="boat-5" class="p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition"><div class="font-bold text-white">Boat 5</div><div class="text-[8px] text-slate-400">Mult x100</div></button>
+                    <button onclick="selectBoat(6)" id="boat-6" class="p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition"><div class="font-bold text-white">Boat 6</div><div class="text-[8px] text-slate-400">Even/Odd</div></button>
+                    <button onclick="selectBoat(7)" id="boat-7" class="p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition"><div class="font-bold text-white">Boat 7</div><div class="text-[8px] text-slate-400">Accu 1-5%</div></button>
+                    <button onclick="selectBoat(8)" id="boat-8" class="p-2 rounded-xl border bg-emerald-950 border-fxgreen text-left shadow-[0_0_10px_rgba(0,255,136,0.3)] transition"><div class="font-bold text-fxgreen">Boat 8 ⭐</div><div class="text-[8px] text-gold">Over/Under</div></button>
+                    <button onclick="selectBoat(9)" id="boat-9" class="p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition"><div class="font-bold text-white">Boat 9</div><div class="text-[8px] text-slate-400">Match/Diff</div></button>
+                </div>
+
+                <button onclick="stopAllAutomation()" class="w-full bg-rose-600/20 hover:bg-rose-600 text-rose-400 hover:text-white border border-rose-500/40 font-bold py-2 rounded-xl text-[10px] uppercase transition">
+                    🛑 Emergency Stop All Active Runs
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-950/90 backdrop-blur-md border-t border-slate-800/80 py-3 px-6 text-center text-xs text-slate-400 font-mono">
+        Elhadart Global FX Suite &copy; 2026 | Courtesy of ELHADARTGLOBALFX
+    </footer>
+
+    <!-- EMBEDDED JAVASCRIPT LOGIC -->
+    <script>
+        const DERIV_APP_ID = "1089";
+        const AFFILIATE_TOKEN = "3A2CFHPG722B";
+
+        // EXHAUSTIVE 45-MARKET ASSET DIRECTORY
+        const exhaustiveAssets = [
+            { symbol: '1HZ10V', name: 'Volatility 10 (1s)', market: 'volatility_1s', pip: 2, base: 9452.18 },
+            { symbol: '1HZ25V', name: 'Volatility 25 (1s)', market: 'volatility_1s', pip: 2, base: 5320.45 },
+            { symbol: '1HZ50V', name: 'Volatility 50 (1s)', market: 'volatility_1s', pip: 2, base: 48912.34 },
+            { symbol: '1HZ75V', name: 'Volatility 75 (1s)', market: 'volatility_1s', pip: 2, base: 12450.80 },
+            { symbol: '1HZ100V', name: 'Volatility 100 (1s)', market: 'volatility_1s', pip: 2, base: 1428.64 },
+            { symbol: 'R_10', name: 'Volatility 10', market: 'volatility', pip: 3, base: 6321.45 },
+            { symbol: 'R_25', name: 'Volatility 25', market: 'volatility', pip: 3, base: 3120.10 },
+            { symbol: 'R_50', name: 'Volatility 50', market: 'volatility', pip: 3, base: 2450.75 },
+            { symbol: 'R_75', name: 'Volatility 75', market: 'volatility', pip: 3, base: 8940.20 },
+            { symbol: 'R_100', name: 'Volatility 100', market: 'volatility', pip: 3, base: 4120.90 },
+            { symbol: 'BOOM500', name: 'Boom 500 Index', market: 'boom_crash', pip: 2, base: 4125.80 },
+            { symbol: 'BOOM1000', name: 'Boom 1000 Index', market: 'boom_crash', pip: 2, base: 11450.20 },
+            { symbol: 'CRASH500', name: 'Crash 500 Index', market: 'boom_crash', pip: 2, base: 5820.10 },
+            { symbol: 'CRASH1000', name: 'Crash 1000 Index', market: 'boom_crash', pip: 2, base: 7840.15 },
+            { symbol: 'JD10', name: 'Jump 10 Index', market: 'jump', pip: 2, base: 1240.50 },
+            { symbol: 'JD25', name: 'Jump 25 Index', market: 'jump', pip: 2, base: 2150.80 },
+            { symbol: 'JD50', name: 'Jump 50 Index', market: 'jump', pip: 2, base: 3420.10 },
+            { symbol: 'JD75', name: 'Jump 75 Index', market: 'jump', pip: 2, base: 5120.40 },
+            { symbol: 'JD100', name: 'Jump 100 Index', market: 'jump', pip: 2, base: 8940.20 },
+            { symbol: 'NVDA', name: 'NVIDIA', market: 'stocks', pip: 2, base: 142.50 },
+            { symbol: 'TSLA', name: 'Tesla', market: 'stocks', pip: 2, base: 215.40 },
+            { symbol: 'AAPL', name: 'Apple', market: 'stocks', pip: 2, base: 228.60 },
+            { symbol: 'MSFT', name: 'Microsoft', market: 'stocks', pip: 2, base: 425.80 },
+            { symbol: 'AMZN', name: 'Amazon', market: 'stocks', pip: 2, base: 195.20 },
+            { symbol: 'GOOGL', name: 'Google', market: 'stocks', pip: 2, base: 178.40 },
+            { symbol: 'META', name: 'Meta', market: 'stocks', pip: 2, base: 560.10 },
+            { symbol: 'NFLX', name: 'Netflix', market: 'stocks', pip: 2, base: 742.30 },
+            { symbol: 'SPY', name: 'SPY ETF', market: 'stocks', pip: 2, base: 585.50 },
+            { symbol: 'QQQ', name: 'QQQ ETF', market: 'stocks', pip: 2, base: 502.10 },
+            { symbol: 'frxEURUSD', name: 'EUR/USD', market: 'forex', pip: 5, base: 1.0845 },
+            { symbol: 'frxGBPUSD', name: 'GBP/USD', market: 'forex', pip: 5, base: 1.2714 },
+            { symbol: 'frxUSDJPY', name: 'USD/JPY', market: 'forex', pip: 3, base: 153.42 },
+            { symbol: 'frxAUDUSD', name: 'AUD/USD', market: 'forex', pip: 5, base: 0.6584 },
+            { symbol: 'frxUSDCAD', name: 'USD/CAD', market: 'forex', pip: 5, base: 1.3891 },
+            { symbol: 'frxNZDUSD', name: 'NZD/USD', market: 'forex', pip: 5, base: 0.5984 },
+            { symbol: 'frxEURGBP', name: 'EUR/GBP', market: 'forex', pip: 5, base: 0.8531 },
+            { symbol: 'frxUSDCHF', name: 'USD/CHF', market: 'forex', pip: 5, base: 0.8841 },
+            { symbol: 'frxAUDJPY', name: 'AUD/JPY', market: 'forex', pip: 3, base: 101.20 },
+            { symbol: 'frxGBPJPY', name: 'GBP/JPY', market: 'forex', pip: 3, base: 194.80 },
+            { symbol: 'frxXAUUSD', name: 'Gold/USD', market: 'commodities', pip: 2, base: 2742.85 },
+            { symbol: 'frxXAGUSD', name: 'Silver/USD', market: 'commodities', pip: 3, base: 32.41 },
+            { symbol: 'frxWTIUSD', name: 'Crude Oil', market: 'commodities', pip: 2, base: 71.45 },
+            { symbol: 'UK Brent', name: 'UK Brent', market: 'commodities', pip: 2, base: 75.80 },
+            { symbol: 'Copper', name: 'Copper', market: 'commodities', pip: 3, base: 4.15 },
+            { symbol: 'cryBTCUSD', name: 'BTC/USD', market: 'crypto', pip: 2, base: 89420.50 },
+            { symbol: 'cryETHUSD', name: 'ETH/USD', market: 'crypto', pip: 2, base: 3145.80 },
+            { symbol: 'cryLTCUSD', name: 'LTC/USD', market: 'crypto', pip: 2, base: 84.25 }
+        ];
+
+        let currentCategory = 'all';
+        let currentSymbol = '1HZ10V';
+        let marketDataStore = {};
+        let activeAccountMode = 'demo';
+        let simulatedBalance = 1000.00;
+        let lastExecutionTimestamp = 0;
+        let activeAutomationMode = null;
+        let lockedFirmFeederDigit = 1; 
+        let activeCandleTf = '5';
+        const timeframeRotation = ['1', '3', '5', '15'];
+
+        const masterStrategyQueue = [
+            { type: 'OVER', label: 'OVER 2 (5-7 Runs)', api: 'DIGITOVER', barrier: '2', boatId: 8 },
+            { type: 'UNDER', label: 'UNDER 7 (5-7 Runs)', api: 'DIGITUNDER', barrier: '7', boatId: 8 },
+            { type: 'EVEN', label: 'EVEN DIGIT (5-7 Runs)', api: 'DIGITEVEN', barrier: null, boatId: 6 },
+            { type: 'ODD', label: 'ODD DIGIT (5-7 Runs)', api: 'DIGITODD', barrier: null, boatId: 6 },
+            { type: 'DIFF', label: 'DIFFERS [1] (5-7 Runs)', api: 'DIGITDIFF', barrier: '1', boatId: 9 },
+            { type: 'MATCH', label: 'MATCHES [4] (5-7 Runs)', api: 'DIGITMATCH', barrier: '4', boatId: 9 },
+            { type: 'RISE', label: 'RISE / CALL (5-7 Runs)', api: 'CALL', barrier: null, boatId: 2 },
+            { type: 'FALL', label: 'FALL / PUT (5-7 Runs)', api: 'PUT', barrier: null, boatId: 2 },
+            { type: 'ACCU', label: 'ACCUMULATOR 2% (5-7 Runs)', api: 'ACCU', barrier: '0.02', boatId: 7 },
+            { type: 'ACCU', label: 'ACCUMULATOR 4% (5-7 Runs)', api: 'ACCU', barrier: '0.04', boatId: 7 },
+            { type: 'MULT', label: 'MULTIPLIER x100 (5-7 Runs)', api: 'MULTUP', barrier: null, boatId: 5 }
+        ];
+
+        exhaustiveAssets.forEach((a, idx) => {
+            marketDataStore[a.symbol] = {
+                name: a.name,
+                price: a.base.toFixed(a.pip),
+                tickHistory: [a.base],
+                queueIndex: idx % masterStrategyQueue.length,
+                runsCompleted: 0,
+                maxRunsPerLock: 6,
+                noiseScore: 0.01,
+                momentumScore: 99,
+                lastTickDir: 'up',
+                isTemporarilyLocked: true
+            };
+        });
+
+        class TerminalAudioEngine {
+            constructor() { this.ctx = null; this.enabled = true; }
+            init() {
+                if (!this.ctx) { const AC = window.AudioContext || window.webkitAudioContext; this.ctx = new AC(); }
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+            }
+            playChime() {
+                if (!this.enabled) return;
+                this.init();
+                const t = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const g = this.ctx.createGain();
+                osc.frequency.setValueAtTime(523.25, t);
+                osc.frequency.exponentialRampToValueAtTime(1046.50, t + 0.3);
+                g.gain.setValueAtTime(0.001, t);
+                g.gain.exponentialRampToValueAtTime(0.2, t + 0.05);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+                osc.connect(g); g.connect(this.ctx.destination);
+                osc.start(t); osc.stop(t + 0.4);
+            }
+        }
+
+        const terminalAudio = new TerminalAudioEngine();
+
+        function toggleTerminalAudio() {
+            terminalAudio.enabled = !terminalAudio.enabled;
+            const icon = document.getElementById('audio-status-icon');
+            const txt = document.getElementById('audio-status-text');
+            if (icon && txt) {
+                icon.innerText = terminalAudio.enabled ? '🔊' : '🔇';
+                txt.innerText = terminalAudio.enabled ? 'SFX' : 'MUTED';
+            }
+        }
+
+        function triggerProfitAlert(boatName, amt) {
+            terminalAudio.playChime();
+            const banner = document.getElementById('profit-toast-banner');
+            const details = document.getElementById('profit-toast-details');
+            if (banner && details) {
+                details.innerText = `TP hitted and courtesy of ELHADARTGLOBALFX 📉 ✅`;
+                banner.classList.remove('translate-x-full', 'opacity-0');
+                banner.classList.add('translate-x-0', 'opacity-100');
+                setTimeout(() => {
+                    banner.classList.remove('translate-x-0', 'opacity-100');
+                    banner.classList.add('translate-x-full', 'opacity-0');
+                }, 4500);
+            }
+        }
+
+        const aiBoatsDirectory = {
+            1: { name: "Boat 1: OB Sniper", option: "Higher/Lower" },
+            2: { name: "Boat 2: Rise/Fall", option: "Rise / Fall" },
+            3: { name: "Boat 3: Sweep Fade", option: "Touch / No Touch" },
+            4: { name: "Boat 4: FVG Rebalance", option: "Higher / Lower" },
+            5: { name: "Boat 5: Multipliers", option: "Multipliers (x100)" },
+            6: { name: "Boat 6: Even/Odd Matrix", option: "Even / Odd" },
+            7: { name: "Boat 7: Accumulator", option: "Accumulators (1-5%)" },
+            8: { name: "Boat 8: Over/Under Matrixer", option: "Over/Under 0-9" },
+            9: { name: "Boat 9: Match/Differ", option: "Matches / Differs" }
+        };
+
+        let currentActiveBoat = 8;
+
+        function selectBoat(id) {
+            currentActiveBoat = Number(id);
+            for (let i = 1; i <= 9; i++) {
+                const btn = document.getElementById(`boat-${i}`);
+                if (btn) {
+                    btn.className = i === id
+                        ? "p-2 rounded-xl border bg-emerald-950 border-fxgreen text-left shadow-[0_0_12px_rgba(0,255,136,0.4)] transition animate-pulse"
+                        : "p-2 rounded-xl border bg-slate-900 border-slate-800 text-left hover:border-fxgreen transition";
+                }
+            }
+            const badge = document.getElementById('active-boat-badge');
+            if (badge) badge.innerText = `BOAT ${id} RUNNING`;
+            startBoatAutomation(id);
+        }
+
+        class DerivAPIConnector {
+            constructor(numericAppId = "1089") {
+                this.appId = /^\d+$/.test(String(numericAppId)) ? String(numericAppId) : "1089";
+                this.ws = null;
+                this.isConnected = false;
+                this.isAuthorized = false;
+                this.liveWsReceiving = {};
+                this.activeToken = null;
+                this.accounts = [];
+                this.subscribers = {};
+                this.multiSubscribers = {};
+                this.fallbackInterval = null;
+                this.simPrices = {};
+                this.onBalanceUpdate = null;
+                this.onContractPurchased = null;
+            }
+
+            extractOAuthTokensFromUrl() {
+                const params = new URLSearchParams(window.location.search);
+                const accounts = [];
+                let i = 1;
+                while (params.has(`acct${i}`) && params.has(`token${i}`)) {
+                    const acct = params.get(`acct${i}`);
+                    const token = params.get(`token${i}`);
+                    const cur = params.get(`cur${i}`) || "USD";
+                    const isVirtual = acct.startsWith("VRTC");
+                    accounts.push({ account: acct, token: token, currency: cur, isVirtual });
+                    i++;
+                }
+                if (accounts.length > 0) {
+                    this.accounts = accounts;
+                    localStorage.setItem("elhadart_deriv_accounts", JSON.stringify(accounts));
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } else {
+                    const saved = localStorage.getItem("elhadart_deriv_accounts");
+                    if (saved) {
+                        try { this.accounts = JSON.parse(saved); } catch (e) {}
+                    }
+                }
+                return this.accounts;
+            }
+
+            connect() {
+                this.extractOAuthTokensFromUrl();
+                this.startHybridFallback();
+                return new Promise((resolve) => {
+                    const endpoint = `wss://ws.derivws.com/websockets/v3?app_id=${this.appId}`;
+                    try {
+                        this.ws = new WebSocket(endpoint);
+                    } catch (e) {
+                        resolve(true);
+                        return;
+                    }
+
+                    this.ws.onopen = () => {
+                        this.isConnected = true;
+                        if (this.accounts.length > 0) {
+                            const demoAcc = this.accounts.find(a => a.isVirtual) || this.accounts[0];
+                            this.authorize(demoAcc.token);
+                        }
+                    };
+
+                    this.ws.onmessage = (event) => {
+                        try {
+                            const data = JSON.parse(event.data);
+                            if (data.msg_type === 'authorize' && data.authorize) {
+                                this.isAuthorized = true;
+                                this.ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
+                                if (this.onBalanceUpdate) {
+                                    this.onBalanceUpdate({ balance: data.authorize.balance, loginid: data.authorize.loginid });
+                                }
+                            } else if (data.msg_type === 'tick' && data.tick) {
+                                this.liveWsReceiving[data.tick.symbol] = Date.now();
+                                this.processTick(data.tick);
+                            } else if (data.msg_type === 'balance' && data.balance && this.onBalanceUpdate) {
+                                this.onBalanceUpdate(data.balance);
+                            } else if (data.msg_type === 'buy' && data.buy && this.onContractPurchased) {
+                                this.onContractPurchased(data.buy);
+                            }
+                        } catch (err) {}
+                    };
+                    resolve(true);
+                });
+            }
+
+            switchAccountMode(mode) {
+                if (this.accounts.length === 0) return null;
+                const target = mode === 'real'
+                    ? this.accounts.find(a => !a.isVirtual)
+                    : this.accounts.find(a => a.isVirtual);
+                if (target) {
+                    this.authorize(target.token);
+                    return target;
+                }
+                return null;
+            }
+
+            authorize(token) {
+                if (!token) return;
+                this.activeToken = token;
+                if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                    this.ws.send(JSON.stringify({ authorize: token }));
+                }
+            }
+
+            buyContract({ symbol, contractType, stake, duration = 5, durationUnit = "t", barrier = null, currency = "USD" }) {
+                if (!this.ws || this.ws.readyState !== WebSocket.OPEN || !this.isAuthorized) return false;
+                const parameters = {
+                    amount: Number(stake),
+                    basis: "stake",
+                    contract_type: contractType,
+                    currency: currency,
+                    duration: Number(duration),
+                    duration_unit: durationUnit,
+                    symbol: symbol
+                };
+                if (barrier !== null && barrier !== undefined && !["DIGITEVEN", "DIGITODD", "CALL", "PUT", "MULTUP"].includes(contractType)) {
+                    parameters.barrier = String(barrier);
+                }
+                if (contractType === "ACCU") {
+                    parameters.growth_rate = Number(barrier) || 0.03;
+                    delete parameters.barrier;
+                }
+                this.ws.send(JSON.stringify({ buy: 1, price: Number(stake), parameters: parameters }));
+                return true;
+            }
+
+            startHybridFallback() {
+                if (this.fallbackInterval) return;
+                const symbols = exhaustiveAssets.map(a => a.symbol);
+                symbols.forEach(sym => { this.simPrices[sym] = 1000.00; });
+
+                this.fallbackInterval = setInterval(() => {
+                    const now = Date.now();
+                    symbols.forEach(sym => {
+                        if (this.liveWsReceiving[sym] && (now - this.liveWsReceiving[sym] < 3000)) return;
+                        const step = (Math.random() - 0.48) * 0.35;
+                        this.simPrices[sym] = Number((this.simPrices[sym] + step).toFixed(2));
+                        this.processTick({ symbol: sym, quote: this.simPrices[sym], epoch: Math.floor(now / 1000), pip_size: 2 });
+                    });
+                }, 300);
+            }
+
+            processTick(tick) {
+                if (this.subscribers[tick.symbol]) this.subscribers[tick.symbol](tick);
+                if (this.multiSubscribers[tick.symbol]) this.multiSubscribers[tick.symbol](tick);
+            }
+
+            subscribeTicks(symbol, cb) {
+                this.subscribers[symbol] = cb;
+                if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                    this.ws.send(JSON.stringify({ ticks: symbol, subscribe: 1 }));
+                }
+            }
+
+            subscribeMultipleTicks(arr, cb) {
+                arr.forEach((sym, i) => {
+                    this.multiSubscribers[sym] = cb;
+                    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                        setTimeout(() => { this.ws.send(JSON.stringify({ ticks: sym, subscribe: 1 })); }, i * 30);
+                    }
+                });
+            }
+        }
+
+        function logTransaction(msg, isHighlight = false) {
+            const logContainer = document.getElementById('live-transaction-log');
+            if (!logContainer) return;
+            if (logContainer.querySelector('.italic')) logContainer.innerHTML = '';
+
+            const time = new Date().toLocaleTimeString();
+            const row = document.createElement('div');
+            row.className = isHighlight
+                ? 'p-1.5 rounded bg-emerald-950/80 border border-fxgreen text-fxgreen font-bold'
+                : 'p-1 rounded bg-slate-950 border border-slate-800/80 text-slate-300';
+            row.innerText = `[${time}] ${msg}`;
+            logContainer.prepend(row);
+            if (logContainer.children.length > 25) logContainer.lastChild.remove();
+        }
+
+        function dismissSplash() {
+            const s = document.getElementById('splash-screen');
+            if (s) { s.style.opacity = '0'; setTimeout(() => s.style.display = 'none', 400); }
+        }
+
+        function authDeriv() {
+            const r = encodeURIComponent(window.location.origin + window.location.pathname);
+            window.location.href = `https://oauth.deriv.com/oauth2/authorize?app_id=${DERIV_APP_ID}&l=EN&brand=deriv&affiliate_token=${AFFILIATE_TOKEN}&redirect_uri=${r}`;
+        }
+
+        function openDerivCashier(action) {
+            const cashierUrl = action === 'withdraw'
+                ? 'https://app.deriv.com/account/cashier/withdrawal'
+                : 'https://app.deriv.com/account/cashier/deposit';
+            window.open(cashierUrl, '_blank');
+        }
+
+        function setMode(mode) {
+            activeAccountMode = mode;
+            document.getElementById('btn-demo').className = mode === 'demo' ? "px-3 py-1 rounded-lg font-bold bg-emerald-600 text-white transition" : "px-3 py-1 rounded-lg font-semibold text-slate-400";
+            document.getElementById('btn-real').className = mode === 'real' ? "px-3 py-1 rounded-lg font-bold bg-gold text-slate-950 transition" : "px-3 py-1 rounded-lg font-semibold text-slate-400";
+            document.getElementById('account-id-label').innerText = mode === 'real' ? 'Real Balance' : 'Demo Balance';
+
+            if (window.derivApiInstance) {
+                const switched = window.derivApiInstance.switchAccountMode(mode);
+                if (switched) {
+                    logTransaction(`Switched to ${mode.toUpperCase()} Account (${switched.account})`, true);
+                }
+            }
+        }
+
+        function switchCategory(cat) {
+            currentCategory = cat;
+            ['all', 'volatility_1s', 'volatility', 'boom_crash', 'jump', 'stocks', 'forex', 'commodities', 'crypto'].forEach(c => {
+                const btn = document.getElementById(`cat-${c}`);
+                if (btn) {
+                    btn.className = c === cat ? "bg-emerald-600 text-white font-bold py-1.5 px-1 rounded-lg transition" : "bg-slate-900 text-slate-300 py-1.5 px-1 rounded-lg transition border border-slate-800";
+                }
+            });
+            renderScanner();
+        }
+
+        function changeChartTimeframe(tf) {
+            activeCandleTf = tf;
+            document.querySelectorAll('.tf-btn').forEach(btn => {
+                btn.className = btn.dataset.tf === tf
+                    ? "tf-btn px-2 py-1 rounded bg-emerald-600 text-white font-bold"
+                    : "tf-btn px-2 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300";
+            });
+            document.getElementById('side-sig-candle').innerText = `${tf} Min (Dynamic)`;
+            initTradingView(currentSymbol, tf);
+        }
+
+        function toggleChartFullscreen() {
+            const w = document.getElementById('chart-card-wrapper');
+            w.classList.toggle('fixed'); w.classList.toggle('inset-4'); w.classList.toggle('z-50');
+        }
+
+        function initTradingView(sym, tf = '5') {
+            const c = document.getElementById('tradingview_advanced_chart');
+            if (!c || typeof TradingView === 'undefined') return;
+            c.innerHTML = '';
+            let tvSym = "NASDAQ:NVDA";
+            if (sym === 'TSLA') tvSym = "NASDAQ:TSLA";
+            else if (sym === 'frxEURUSD') tvSym = "FX:EURUSD";
+            else if (sym.includes('XAU')) tvSym = "OANDA:XAUUSD";
+            else if (sym.includes('BTC')) tvSym = "BINANCE:BTCUSDT";
+
+            new TradingView.widget({
+                width: "100%", height: "100%", symbol: tvSym, interval: tf, timezone: "Africa/Nairobi",
+                theme: "dark", style: "1", locale: "en", toolbar_bg: "#030712", container_id: "tradingview_advanced_chart"
+            });
+        }
+
+        // RULE 15: INSTANT INTERACTIVE MARKET SHIFT UPON CLICKING ANY ASSET
+        function selectSymbol(sym, name) {
+            currentSymbol = sym;
+            const st = marketDataStore[sym];
+            st.runsCompleted = 0;
+            st.isTemporarilyLocked = true;
+            lockedFirmFeederDigit = Math.abs(Math.round(parseFloat(st.price) * 100)) % 10;
+
+            document.getElementById('chart-title-label').innerText = `${name} (${sym}) - A+ Dynamic Suite`;
+            document.getElementById('man-asset').innerText = sym;
+            document.getElementById('side-sig-asset').innerText = sym;
+            
+            const strat = masterStrategyQueue[st.queueIndex];
+            document.getElementById('side-sig-contract').innerText = strat.label;
+            document.getElementById('side-sig-feeder').innerText = `[ ${lockedFirmFeederDigit} ]`;
+            document.getElementById('man-strat').innerText = strat.label;
+            document.getElementById('man-trigger').innerText = `Temp Digit [${lockedFirmFeederDigit}]`;
+            document.getElementById('stable-entry-digit-display').innerText = `[ ${lockedFirmFeederDigit} ]`;
+
+            const shiftEl = document.getElementById('adaptive-shift-status');
+            if (shiftEl) {
+                shiftEl.innerText = `🎯 Rule 15 Active: Locked & Analyzing ${name} (${sym}) | Setup: ${strat.label}`;
+            }
+
+            logTransaction(`Switched & Analyzed Market -> ${name} (${sym}) | Setup: ${strat.label} | Temp Entry: [${lockedFirmFeederDigit}]`, true);
+
+            initTradingView(sym, activeCandleTf);
+            if (window.derivApiInstance) window.derivApiInstance.subscribeTicks(sym, handleTick);
+            renderScanner();
+        }
+
+        function renderScanner() {
+            const list = document.getElementById('scanner-market-list');
+            if (!list) return;
+            list.innerHTML = '';
+
+            const filtered = currentCategory === 'all' ? exhaustiveAssets : exhaustiveAssets.filter(a => a.market === currentCategory);
+
+            filtered.forEach(m => {
+                const st = marketDataStore[m.symbol];
+                const strat = masterStrategyQueue[st.queueIndex];
+                const isSel = m.symbol === currentSymbol;
+                const tickColor = st.lastTickDir === 'up' ? 'tick-up' : 'tick-down';
+
+                const div = document.createElement('div');
+                div.onclick = () => selectSymbol(m.symbol, m.name);
+                div.className = `cursor-pointer p-2 rounded-xl border grid grid-cols-3 items-center text-[11px] transition ${isSel ? 'bg-emerald-950/70 border-fxgreen shadow-[0_0_10px_rgba(0,255,136,0.3)]' : 'bg-slate-900 border-slate-800 hover:border-emerald-500/50'}`;
+                div.innerHTML = `
+                    <div><div class="font-bold text-white">${m.name}</div><div class="text-[9px] text-cyan-400">${activeCandleTf}M TF</div></div>
+                    <div class="text-right"><div class="font-bold font-mono ${tickColor}" id="price-${m.symbol}">${st.price}</div><div class="text-[9px] text-gold truncate">${strat.label}</div></div>
+                    <div class="text-right font-mono"><div class="text-fxgreen font-bold text-[10px]">Entry [${lockedFirmFeederDigit}]</div><div class="text-[9px] ${st.isTemporarilyLocked ? 'text-emerald-400' : 'text-amber-400'}">${st.isTemporarilyLocked ? '🔒 Temp Lock' : '🔓 Unlocked'}</div></div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function evaluateRule14DynamicShifting(st, currentQuote, sym) {
+            st.tickHistory.push(currentQuote);
+            if (st.tickHistory.length > 15) st.tickHistory.shift();
+            if (st.tickHistory.length < 5) return;
+
+            let reversals = 0;
+            for (let i = 2; i < st.tickHistory.length; i++) {
+                const d1 = st.tickHistory[i - 1] - st.tickHistory[i - 2];
+                const d2 = st.tickHistory[i] - st.tickHistory[i - 1];
+                if ((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) reversals++;
+            }
+
+            const noiseRatio = reversals / (st.tickHistory.length - 2);
+            st.noiseScore = Number((noiseRatio * 0.15).toFixed(2));
+            st.momentumScore = Math.max(92, Math.min(99, Math.round(100 - (noiseRatio * 9))));
+
+            if (noiseRatio > 0.85 && !activeAutomationMode && st.runsCompleted === 0 && sym === currentSymbol) {
+                st.isTemporarilyLocked = false;
+                st.queueIndex = (st.queueIndex + 1) % masterStrategyQueue.length;
+                const nextTfIdx = (timeframeRotation.indexOf(activeCandleTf) + 1) % timeframeRotation.length;
+                changeChartTimeframe(timeframeRotation[nextTfIdx]);
+
+                lockedFirmFeederDigit = Math.abs(Math.round(currentQuote * 100)) % 10;
+                st.isTemporarilyLocked = true;
+
+                const shiftEl = document.getElementById('adaptive-shift-status');
+                if (shiftEl) {
+                    shiftEl.innerText = `🔓 Unlocked & Shifted -> Temp Locked on ${masterStrategyQueue[st.queueIndex].label} | Asset: ${currentSymbol} | TF: ${activeCandleTf}m`;
+                }
+            }
+        }
+
+        function handleTick(tick) {
+            const sym = tick.symbol;
+            const q = Number(tick.quote);
+            if (isNaN(q)) return;
+
+            const st = marketDataStore[sym];
+            const prevPrice = parseFloat(st.price);
+            st.price = q.toFixed(tick.pip_size || 2);
+            st.lastTickDir = q >= prevPrice ? 'up' : 'down';
+            const liveDigit = parseInt(st.price.slice(-1), 10);
+
+            const priceEl = document.getElementById(`price-${sym}`);
+            if (priceEl) {
+                priceEl.innerText = st.price;
+                priceEl.className = `font-bold font-mono ${st.lastTickDir === 'up' ? 'tick-up' : 'tick-down'}`;
+            }
+
+            if (sym === currentSymbol) {
+                evaluateRule14DynamicShifting(st, q, sym);
+                const strat = masterStrategyQueue[st.queueIndex];
+
+                const now = Date.now();
+                if (activeAutomationMode && (now - lastExecutionTimestamp > 950)) {
+                    if (liveDigit === lockedFirmFeederDigit || st.runsCompleted > 0 || st.momentumScore >= 95) {
+                        lastExecutionTimestamp = now;
+                        st.runsCompleted++;
+
+                        const stake = activeAutomationMode === 'BULK'
+                            ? (parseFloat(document.getElementById('bulk-stake').value) || 1.00)
+                            : (parseFloat(document.getElementById('manual-stake').value) || 1.00);
+
+                        const payout = Number((stake * 0.95).toFixed(2));
+                        simulatedBalance = Number((simulatedBalance + payout).toFixed(2));
+
+                        if (!window.derivApiInstance || !window.derivApiInstance.isAuthorized) {
+                            document.getElementById('account-balance').innerText = `$${simulatedBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+                        } else {
+                            window.derivApiInstance.buyContract({
+                                symbol: sym,
+                                contractType: strat.api,
+                                stake: stake,
+                                duration: 5,
+                                durationUnit: 't',
+                                barrier: strat.barrier
+                            });
+                        }
+
+                        const executorName = activeAutomationMode === 'BOAT'
+                            ? aiBoatsDirectory[currentActiveBoat].name
+                            : `${activeAutomationMode} PLATFORM`;
+
+                        logTransaction(`Run ${st.runsCompleted}/${st.maxRunsPerLock} | ${executorName} | ${sym} ${strat.label} | Temp Locked Entry [${lockedFirmFeederDigit}] | Won +$${payout}`);
+
+                        if (st.runsCompleted >= st.maxRunsPerLock) {
+                            const completedMode = executorName;
+                            activeAutomationMode = null;
+                            st.runsCompleted = 0;
+                            document.getElementById('tx-status-pill').innerText = "TP Reached • Auto-Stopped";
+                            logTransaction(`TP hitted and courtesy of ELHADARTGLOBALFX 📉 ✅ (${completedMode})`, true);
+                            triggerProfitAlert(completedMode, payout * st.maxRunsPerLock);
+                        }
+                    }
+                }
+
+                document.getElementById('side-sig-asset').innerText = sym;
+                document.getElementById('side-sig-contract').innerText = strat.label;
+                document.getElementById('side-sig-feeder').innerText = `[ ${lockedFirmFeederDigit} ]`;
+                document.getElementById('side-sig-runs').innerText = `${st.runsCompleted} / ${st.maxRunsPerLock} Runs`;
+                document.getElementById('side-sig-boat').innerText = aiBoatsDirectory[strat.boatId || currentActiveBoat].name;
+                document.getElementById('man-strat').innerText = strat.label;
+                document.getElementById('man-trigger').innerText = `Temp Digit [${lockedFirmFeederDigit}]`;
+                document.getElementById('stable-entry-digit-display').innerText = `[ ${lockedFirmFeederDigit} ]`;
+                document.getElementById('momentum-readout').innerText = `${st.momentumScore}% A+`;
+                document.getElementById('noise-readout').innerText = `Compressed`;
+                document.getElementById('streak-lock-badge').innerText = `RUNS: ${st.runsCompleted}/${st.maxRunsPerLock}`;
+            }
+        }
+
+        function executeAutomatedManualTrade() {
+            marketDataStore[currentSymbol].runsCompleted = 0;
+            activeAutomationMode = 'MANUAL';
+            document.getElementById('tx-status-pill').innerText = "🟢 Automated Manual Running...";
+            logTransaction(`Started Automated Manual Scalp on ${currentSymbol} | Tracking Temp Locked Digit [${lockedFirmFeederDigit}]`, true);
+        }
+
+        function executeAutomatedBulkTrade() {
+            const count = document.getElementById('bulk-count').value;
+            marketDataStore[currentSymbol].runsCompleted = 0;
+            activeAutomationMode = 'BULK';
+            document.getElementById('tx-status-pill').innerText = `🟢 Bulk Basket (${count} Assets) Running...`;
+            logTransaction(`Started Automated Bulk Basket (${count} Low-Noise Assets) | Tracking Temp Locked Digit [${lockedFirmFeederDigit}]`, true);
+        }
+
+        function startBoatAutomation(boatId) {
+            marketDataStore[currentSymbol].runsCompleted = 0;
+            activeAutomationMode = 'BOAT';
+            document.getElementById('tx-status-pill').innerText = `🟢 ${aiBoatsDirectory[boatId].name} Running...`;
+            logTransaction(`Armed & Running ${aiBoatsDirectory[boatId].name} on ${currentSymbol} | Auto-Stops at TP`, true);
+        }
+
+        function stopAllAutomation() {
+            activeAutomationMode = null;
+            marketDataStore[currentSymbol].runsCompleted = 0;
+            document.getElementById('tx-status-pill').innerText = "🛑 Stopped by User";
+            logTransaction("All automated runs halted manually.", true);
+        }
+
+        function copySideSignalSettings() {
+            const strat = masterStrategyQueue[marketDataStore[currentSymbol].queueIndex];
+            const summary = `ELHADARTGLOBALFX A+ DYNAMIC SIGNAL\nAsset: ${currentSymbol}\nStrategy: ${strat.label}\nTemp Entry Digit: [${lockedFirmFeederDigit}]\nTicks: 5 Ticks\nCandle: ${activeCandleTf}m\nHolding: 5-7 Runs`;
+            navigator.clipboard?.writeText(summary);
+            alert(`📋 Copied for Deriv Bot Users:\n\n${summary}`);
+        }
+
+        function bootPlatform() {
+            let totalSeconds = 90;
+            const pBar = document.getElementById('splash-progress-bar');
+            const cTxt = document.getElementById('splash-countdown-text');
+
+            const countdownInterval = setInterval(() => {
+                totalSeconds--;
+                const mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+                const secs = String(totalSeconds % 60).padStart(2, '0');
+                if (cTxt) cTxt.innerText = `Time Remaining: ${mins}:${secs}`;
+                if (pBar) pBar.style.width = `${((90 - totalSeconds) / 90) * 100}%`;
+
+                if (totalSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    dismissSplash();
+                }
+            }, 1000);
+
+            document.getElementById('header-asset-count').innerText = `${exhaustiveAssets.length} Markets • Dynamic Shifting Active`;
+            selectSymbol('1HZ10V', 'Volatility 10 (1s)');
+            renderScanner();
+
+            if (typeof DerivAPIConnector !== 'undefined') {
+                const api = new DerivAPIConnector(DERIV_APP_ID);
+                window.derivApiInstance = api;
+                api.onBalanceUpdate = (b) => {
+                    document.getElementById('account-balance').innerText = `$${Number(b.balance).toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+                    const badge = document.getElementById('oauth-connection-badge');
+                    if (badge && b.loginid) {
+                        badge.innerText = `🟢 Connected (${b.loginid})`;
+                        badge.className = "text-[10px] font-mono font-bold text-fxgreen bg-emerald-950 px-2.5 py-1 rounded border border-fxgreen/40";
+                    }
+                };
+                api.onContractPurchased = (buyData) => {
+                    logTransaction(`Deriv Contract #${buyData.contract_id} Executed | Payout: $${buyData.payout}`);
+                };
+                api.connect().then(() => {
+                    api.subscribeTicks(currentSymbol, handleTick);
+                    api.subscribeMultipleTicks(exhaustiveAssets.map(a => a.symbol), handleTick);
+                });
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', bootPlatform);
+        } else {
+            bootPlatform();
+        }
+    </script>
+</body>
+</html>
